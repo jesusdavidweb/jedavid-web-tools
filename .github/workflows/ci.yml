@@ -22,6 +22,8 @@ jobs:
           printf '%s\n' '{"jsonrpc":"2.0","id":2,"method":"server/discover","params":{"_meta":{"io.modelcontextprotocol/protocolVersion":"2026-07-28","io.modelcontextprotocol/clientInfo":{"name":"ci","version":"1"},"io.modelcontextprotocol/clientCapabilities":{}}}}' | node bin/jedavid-web-tools-mcp.mjs | grep '2026-07-28'
       - name: Install development dependencies
         run: pnpm install --no-frozen-lockfile --ignore-scripts
+      - name: Build core types
+        run: pnpm --filter @jedavid/web-tools-core build
       - name: Typecheck
         run: pnpm typecheck
       - name: Build
