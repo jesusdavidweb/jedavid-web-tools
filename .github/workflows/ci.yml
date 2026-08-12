@@ -2,32 +2,27 @@ name: CI
 
 on:
   push:
-    branches: [main]
   pull_request:
-
-permissions:
-  contents: read
 
 jobs:
   validate:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Setup Node
-        uses: actions/setup-node@v4
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: 22
-
       - name: Enable Corepack
         run: corepack enable
-
-      - name: Install dependencies
+      - name: Validate portable plugin files
+        run: |
+          node -e "JSON.parse(require('fs').readFileSync('plugin.json','utf8')); JSON.parse(require('fs').readFileSync('mcp.json','utf8'))"
+          test -x bin/jedavid-web-tools-mcp.mjs
+          printf '%s\n' '{"jsonrpc":"2.0","id":1,"method":"tools/list","params":{}}' | node bin/jedavid-web-tools-mcp.mjs | grep 'site_audit'
+          printf '%s\n' '{"jsonrpc":"2.0","id":2,"method":"server/discover","params":{"_meta":{"io.modelcontextprotocol/protocolVersion":"2026-07-28","io.modelcontextprotocol/clientInfo":{"name":"ci","version":"1"},"io.modelcontextprotocol/clientCapabilities":{}}}}' | node bin/jedavid-web-tools-mcp.mjs | grep '2026-07-28'
+      - name: Install development dependencies
         run: pnpm install --no-frozen-lockfile
-
       - name: Typecheck
         run: pnpm typecheck
-
       - name: Build
         run: pnpm build

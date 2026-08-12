@@ -1,52 +1,25 @@
 ---
 name: web-audit
-description: Audit a website for web performance, technical SEO, and HTTP security issues using jedavid-web-tools. Use when the user asks to analyze, audit, diagnose, optimize, compare, or improve a production website or web project.
-license: MIT
-compatibility: Requires Node.js 22+ and network access. For local execution, install repository dependencies with pnpm before invoking the CLI or MCP server.
-metadata:
-  author: jesusdavidweb
-  version: "0.1.0"
+description: Audit public websites using jedavid-web-tools for performance, SEO, accessibility, security, indexability, structured data, LLM discoverability and technology detection.
 ---
 
 # Web Audit
 
-Use `jedavid-web-tools` as the measurement layer. Do not infer performance or SEO problems from source code alone when the production URL can be measured.
+Use the `jedavid-web-tools` MCP server as the measurement layer. Prefer tool output over assumptions.
 
-## Workflow
+## Default workflow
 
-1. Establish the target production URL and scope.
-2. Run a baseline audit before changing code.
-3. Prioritize findings by severity and measurable user impact.
-4. If a repository is available, locate the source responsible for each important finding.
-5. Prefer minimal fixes that preserve functionality, analytics, SEO content, and UX.
-6. Build and test the project after changes.
-7. Re-run the same audit and compare before/after results.
-8. Report remaining limitations separately from verified improvements.
-
-## Local CLI
-
-From the plugin/repository root, ensure dependencies are installed once:
-
-```bash
-pnpm install
-```
-
-Run a complete audit:
-
-```bash
-pnpm audit -- https://example.com
-```
-
-Use JSON output when another agent or script will consume the result:
-
-```bash
-pnpm audit -- https://example.com --json
-```
+1. Start with `site_audit` for a broad baseline.
+2. Use `stack_detect` to understand the delivery/framework context.
+3. Drill into the relevant domain with `performance_audit`, `seo_audit`, `accessibility_audit`, or `security_headers`.
+4. Use specialized tools (`performance_assets`, `seo_schema`, `seo_links`, `seo_indexability`, `seo_llm`, `robots_inspect`, `sitemap_inspect`) to identify root causes.
+5. If comparing a deployed change, use `page_compare`.
+6. Distinguish measured facts from inferred causes.
 
 ## Priorities
 
-For performance work, prioritize real bottlenecks over cosmetic score chasing. For SEO, protect indexability, canonicalization, metadata, structured data, and crawlability. For security, distinguish missing hardening headers from actual exploitable vulnerabilities.
+For performance, prioritize user-impacting causes over scores: response latency, render-critical weight, excessive scripts, image behavior, caching and layout stability. For SEO, prioritize indexability, canonicals, content semantics, structured data and crawlability. For security, do not recommend blindly enabling a policy without considering compatibility.
 
-## Guardrails
+## Safety
 
-Do not remove required features, analytics, consent systems, structured data, or customer-facing functionality merely to improve an audit score. Do not make destructive infrastructure changes without explicit approval.
+All plugin tools are read-only. Do not interpret diagnostics as authorization to edit repositories, DNS, deployments, containers, WordPress or WooCommerce. Public URL tools block localhost and private-network targets to reduce SSRF risk.

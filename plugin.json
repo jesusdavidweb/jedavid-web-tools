@@ -1,20 +1,14 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "jedavid-web-tools",
-  "version": "0.1.0",
-  "description": "Portable web engineering tools for AI agents: performance, SEO, security, and reusable audit workflows.",
+  "version": "0.2.0",
+  "description": "Portable read-only web engineering toolkit for AI agents: performance, SEO, accessibility, security, Cloudflare, WordPress, WooCommerce, GitHub and Docker diagnostics.",
   "author": {
     "name": "Jesus David",
-    "url": "https://jesusdavid.net"
+    "url": "https://github.com/jesusdavidweb"
   },
   "homepage": "https://github.com/jesusdavidweb/jedavid-web-tools",
-  "repository": "https://github.com/jesusdavidweb/jedavid-web-tools.git",
+  "repository": "https://github.com/jesusdavidweb/jedavid-web-tools",
   "license": "MIT",
-  "keywords": [
-    "web-performance",
-    "seo",
-    "security",
-    "mcp",
-    "agent-tools"
-  ]
+  "keywords": ["mcp", "web-performance", "seo", "security", "wordpress", "woocommerce", "cloudflare", "docker", "github", "agent-tools"]
 }
