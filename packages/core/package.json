@@ -1,6 +1,6 @@
 {
   "name": "@jedavid/web-tools-core",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -15,6 +15,6 @@
     "typecheck": "tsc -p tsconfig.json --noEmit"
   },
   "dependencies": {
-    "cheerio": "^1.2.0"
+    "cheerio": "^1.1.2"
   }
 }
