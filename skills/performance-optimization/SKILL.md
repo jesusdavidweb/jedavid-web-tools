@@ -1,6 +1,6 @@
 ---
 name: performance-optimization
-description: Diagnose and prioritize web performance issues using jedavid-web-tools: TTFB, HTML weight, render-blocking scripts, images, caching, and same-origin assets.
+description: Diagnose and prioritize web performance issues using jedavid-web-tools — TTFB, HTML weight, render-blocking scripts, images, caching, and same-origin assets.
 ---
 
 # Performance Optimization

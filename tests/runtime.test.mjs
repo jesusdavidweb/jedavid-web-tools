@@ -3,6 +3,9 @@
 
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 import {
   isPrivateIpv4, isPrivateIpv6, isPrivateIp,
   normalizeHostname,
@@ -10,6 +13,48 @@ import {
   describeCloudflareError,
   SEVERITY, VERSION,
 } from '../bin/lib/runtime.mjs';
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const skillsDir = path.resolve(__dirname, '..', 'skills');
+
+// Regression guard: the Agent Skills spec requires that the YAML frontmatter
+// of every SKILL.md parse as plain scalars. The character sequences ": "
+// (colon + space) and " #" (space + hash) are explicitly forbidden because
+// they are ambiguous with key/value separators and comments in plain style.
+// We previously shipped a skill whose description contained "tools: TTFB"
+// and MiniMax silently skipped it on import.
+test('all skills declare valid Agent Skills frontmatter', () => {
+  const dirs = fs.readdirSync(skillsDir);
+  const errors = [];
+  for (const d of dirs) {
+    const file = path.join(skillsDir, d, 'SKILL.md');
+    if (!fs.existsSync(file)) { errors.push(`${file}: missing`); continue; }
+    const content = fs.readFileSync(file, 'utf8');
+    const m = content.match(/^---\n([\s\S]*?)\n---\n/);
+    if (!m) { errors.push(`${file}: no frontmatter`); continue; }
+    const fm = {};
+    for (const line of m[1].split('\n')) {
+      const i = line.indexOf(':');
+      if (i < 0) continue;
+      fm[line.slice(0, i).trim()] = line.slice(i + 1).trim();
+    }
+    if (!fm.name) errors.push(`${file}: missing name`);
+    if (!fm.description) errors.push(`${file}: missing description`);
+    if (fm.name !== d) errors.push(`${file}: name "${fm.name}" != dir "${d}"`);
+    if (fm.name) {
+      if (!/^[a-z0-9-]+$/.test(fm.name)) errors.push(`${file}: name has invalid chars`);
+      if (fm.name.startsWith('-') || fm.name.endsWith('-')) errors.push(`${file}: name starts/ends with hyphen`);
+      if (fm.name.includes('--')) errors.push(`${file}: name has consecutive hyphens`);
+      if (fm.name.length > 64) errors.push(`${file}: name too long`);
+    }
+    if (fm.description && fm.description.length > 1024) errors.push(`${file}: description too long`);
+    for (const k of ['name', 'description']) {
+      if (fm[k] && /: /.test(fm[k])) errors.push(`${file}: ${k} contains ": " (breaks plain-scalar YAML)`);
+      if (fm[k] && / #/.test(fm[k])) errors.push(`${file}: ${k} contains " #" (breaks plain-scalar YAML)`);
+    }
+  }
+  assert.deepEqual(errors, [], `Skill validation errors:\n${errors.join('\n')}`);
+});
 
 test('isPrivateIpv4: known private ranges', () => {
   assert.equal(isPrivateIpv4('10.0.0.1'), true);

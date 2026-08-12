@@ -47,10 +47,41 @@ jobs:
         run: pnpm test
 
       # 5. Skills sanity. Every Skill must declare name and description.
+      #    The Agent Skills spec requires that the YAML frontmatter parse as
+      #    plain scalars: ": " and " #" sequences inside a value are
+      #    ambiguous with key/value separators or comments and would cause
+      #    the skill to be silently skipped by conformant clients.
       - name: Validate skills
         run: |
-          for f in skills/*/SKILL.md; do
-            test -f "$f" || (echo "missing skill: $f" && exit 1)
-            grep -q '^name:' "$f" || (echo "$f missing name:" && exit 1)
-            grep -q '^description:' "$f" || (echo "$f missing description:" && exit 1)
-          done
+          node -e "
+            const fs = require('node:fs');
+            const path = require('node:path');
+            const dirs = fs.readdirSync('skills');
+            let ok = true;
+            for (const d of dirs) {
+              const file = path.join('skills', d, 'SKILL.md');
+              if (!fs.existsSync(file)) { console.log('missing', file); ok = false; continue; }
+              const content = fs.readFileSync(file, 'utf8');
+              const m = content.match(/^---\n([\s\S]*?)\n---\n/);
+              if (!m) { console.log(file, 'no frontmatter'); ok = false; continue; }
+              const fm = {};
+              for (const line of m[1].split('\n')) {
+                const i = line.indexOf(':');
+                if (i < 0) continue;
+                fm[line.slice(0, i).trim()] = line.slice(i + 1).trim();
+              }
+              if (!fm.name) { console.log(file, 'missing name'); ok = false; }
+              if (!fm.description) { console.log(file, 'missing description'); ok = false; }
+              if (fm.name !== d) { console.log(file, 'name != dir', fm.name, d); ok = false; }
+              if (fm.name && !/^[a-z0-9-]+$/.test(fm.name)) { console.log(file, 'name has invalid chars'); ok = false; }
+              if (fm.name && (fm.name.startsWith('-') || fm.name.endsWith('-'))) { console.log(file, 'name starts/ends with hyphen'); ok = false; }
+              if (fm.name && /--/.test(fm.name)) { console.log(file, 'name has consecutive hyphens'); ok = false; }
+              if (fm.name && fm.name.length > 64) { console.log(file, 'name too long'); ok = false; }
+              if (fm.description && fm.description.length > 1024) { console.log(file, 'description too long'); ok = false; }
+              for (const k of ['name', 'description']) {
+                if (fm[k] && /: /.test(fm[k])) { console.log(file, k, 'contains \": \" (breaks plain-scalar YAML)'); ok = false; }
+                if (fm[k] && / #/.test(fm[k])) { console.log(file, k, 'contains \" #\" (breaks plain-scalar YAML)'); ok = false; }
+              }
+            }
+            if (!ok) process.exit(1);
+          "
