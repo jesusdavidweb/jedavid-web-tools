@@ -202,8 +202,6 @@ const handlers = {
       if (rel === 'preload' && l.attrs.href) refs.push(['preload', l.attrs.href]);
     }
     for (const i of tags(fetched.text, 'img')) if (i.attrs.src) refs.push(['image', i.attrs.src]);
-    for (const m of tags(fetched.text, 'meta')) if (i_tagSrc(m)) refs.push(['resource', i_tagSrc(m)]);
-    function i_tagSrc(m) { /* placeholder: never called; reserved for future extensions */ return null; }
     const unique = [];
     const seen = new Set();
     for (const [type, raw] of refs) {
@@ -458,19 +456,22 @@ const handlers = {
 
   async page_compare({ before, after }) {
     const [a, b] = await Promise.all([auditPage(before, { tool: 'page_compare.before' }), auditPage(after, { tool: 'page_compare.after' })]);
-    const diff = (k) => ({ before: a.data[k], after: b.data[k], delta: typeof a.data[k] === 'number' && typeof b.data[k] === 'number' ? a.data[k] - b.data[k] : null });
     const docMetric = (k) => ({ before: a.data.document[k], after: b.data.document[k] });
+    const aBytes = a.data.document.htmlBytes || 0;
+    const bBytes = b.data.document.htmlBytes || 0;
+    const responseMsBefore = a.data.response.responseMs;
+    const responseMsAfter = b.data.response.responseMs;
     return ok('page_compare', `${before} <> ${after}`, {
       before: a.data.response.finalUrl,
       after: b.data.response.finalUrl,
       status: { before: a.data.response.status, after: b.data.response.status },
-      responseMs: { before: a.data.response.responseMs, after: b.data.response.responseMs, delta: a.data.response.responseMs - b.data.response.responseMs },
-      htmlBytes: { before: Buffer.byteLength('x'), after: Buffer.byteLength('x'), delta: null },
+      responseMs: { before: responseMsBefore, after: responseMsAfter, delta: responseMsBefore - responseMsAfter },
+      htmlBytes: { before: aBytes, after: bBytes, delta: aBytes - bBytes },
       findings: { before: a.findings.length, after: b.findings.length, delta: b.findings.length - a.findings.length },
       scripts: docMetric('scripts'),
       images: docMetric('images'),
     }, {
-      findings: [...a.findings, ...b.findings].sort((x, y) => (y.severity === x.severity ? 0 : 0)),
+      findings: sortFindings([...a.findings, ...b.findings]),
       summary: summarizeFindings([...a.findings, ...b.findings]),
       durationMs: Math.max(a.metadata.durationMs, b.metadata.durationMs),
     });
