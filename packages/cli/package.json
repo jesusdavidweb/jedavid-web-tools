@@ -1,0 +1,16 @@
+{
+  "name": "@jedavid/web-tools-cli",
+  "version": "0.1.0",
+  "type": "module",
+  "bin": {
+    "jedavid-web-tools": "./dist/index.js"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "dev": "tsx src/index.ts",
+    "typecheck": "tsc -p tsconfig.json --noEmit"
+  },
+  "dependencies": {
+    "@jedavid/web-tools-core": "workspace:*"
+  }
+}
