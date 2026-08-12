@@ -1,38 +1,107 @@
-# jedavid-web-tools
+<div align="center">
 
-> **Portable, read-only web engineering toolkit for AI agents.**
-> Performance, SEO, accessibility, security, indexability, structured data,
-> LLM discoverability, WordPress, WooCommerce, Cloudflare, GitHub and Docker
-> diagnostics — over the Model Context Protocol.
+# 🧰 jedavid-web-tools
 
-`jedavid-web-tools` is designed to be imported as an [Agent Plugin 1.0] in
-any MCP-capable client (MiniMax, Claude, ChatGPT, Codex, OpenCode, etc.).
-The same repository doubles as a CLI and as a TypeScript library for
-custom integrations.
+**Portable, read-only web engineering toolkit for AI agents.**
 
-[Agent Plugin 1.0]: https://agent-plugins.org
+Performance, SEO, accessibility, security, indexability, structured data,
+LLM discoverability, WordPress, WooCommerce, Cloudflare, GitHub and Docker
+diagnostics — over the [Model Context Protocol](https://modelcontextprotocol.io).
+
+[Website](https://github.com/jesusdavidweb/jedavid-web-tools) · [Report a bug](https://github.com/jesusdavidweb/jedavid-web-tools/issues) · [Request a feature](https://github.com/jesusdavidweb/jedavid-web-tools/issues)
+
+</div>
+
+<div align="center">
+
+<!-- CI / Build status -->
+[![CI](https://img.shields.io/github/actions/workflow/status/jesusdavidweb/jedavid-web-tools/ci.yml?style=for-the-badge&logo=githubactions&logoColor=white&label=CI)](https://github.com/jesusdavidweb/jedavid-web-tools/actions/workflows/ci.yml)
+[![Tests](https://img.shields.io/badge/tests-79_passing-2ea44f?style=for-the-badge&logo=checkmarx&logoColor=white)](https://github.com/jesusdavidweb/jedavid-web-tools/actions/workflows/ci.yml)
+[![Node](https://img.shields.io/badge/node-%E2%89%A522-339933?style=for-the-badge&logo=nodedotjs&logoColor=white)](https://nodejs.org)
+[![TypeScript](https://img.shields.io/badge/TypeScript-7.0-3178C6?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org)
+
+<!-- Project metadata -->
+[![License: MIT](https://img.shields.io/github/license/jesusdavidweb/jedavid-web-tools?style=for-the-badge&color=blue)](LICENSE)
+[![Version](https://img.shields.io/github/package-json/v/jesusdavidweb/jedavid-web-tools?style=for-the-badge&logo=npm&logoColor=white)](https://github.com/jesusdavidweb/jedavid-web-tools)
+[![Agent Plugin 1.0](https://img.shields.io/badge/Agent_Plugin-1.0-7B61FF?style=for-the-badge&logo=plug&logoColor=white)](https://agent-plugins.org)
+[![MCP Compatible](https://img.shields.io/badge/MCP-compatible-00B4AB?style=for-the-badge&logo=plug&logoColor=white)](https://modelcontextprotocol.io)
+
+<!-- Social / community -->
+[![GitHub stars](https://img.shields.io/github/stars/jesusdavidweb/jedavid-web-tools?style=for-the-badge&logo=github&color=gold)](https://github.com/jesusdavidweb/jedavid-web-tools/stargazers)
+[![GitHub forks](https://img.shields.io/github/forks/jesusdavidweb/jedavid-web-tools?style=for-the-badge&logo=github&color=teal)](https://github.com/jesusdavidweb/jedavid-web-tools/network/members)
+[![GitHub issues](https://img.shields.io/github/issues/jesusdavidweb/jedavid-web-tools?style=for-the-badge&logo=github&color=red)](https://github.com/jesusdavidweb/jedavid-web-tools/issues)
+
+</div>
+
+<div align="center">
+
+### ⚡ 54 MCP tools · 🧠 6 skills · 🔒 100% read-only · 🪶 Zero runtime dependencies
+
+</div>
 
 ---
 
-## Why
+## 📑 Table of Contents
+
+- [🎯 Why?](#why)
+- [✨ Features at a Glance](#features-at-a-glance)
+- [🏗️ Architecture](#architecture)
+- [📂 Repository Layout](#repository-layout)
+- [🚀 Quick Start](#quick-start)
+  - [As an Agent Plugin](#as-an-agent-plugin)
+  - [As a CLI](#as-a-cli)
+  - [As a portable MCP server](#as-a-portable-mcp-server)
+- [🛠️ Tools (54)](#tools-54)
+- [🧠 Skills (6)](#skills-6)
+- [🔐 Environment Variables](#environment-variables)
+- [📦 Result Envelope](#result-envelope)
+- [💡 Examples](#examples)
+- [🔒 Security Model](#security-model)
+- [🔌 MCP Compatibility](#mcp-compatibility)
+- [🛠️ Development](#development)
+- [🤖 CI](#ci)
+- [🤝 Contributing](#contributing)
+- [📄 License](#license)
+- [🔗 Links & Resources](#links--resources)
+
+---
+
+## 🎯 Why?
 
 Auditing, debugging and operating a website is a multi-tool job. The
 toolkit is built around three principles:
 
-1. **Composable, not monolithic.** A `site_audit` is a high-level
+1. **🧩 Composable, not monolithic.** A `site_audit` is a high-level
    orchestrator, but every signal it produces is also available as a
    single, focused tool. Skills and agents can mix and match.
-2. **Portable by default.** The runtime in `bin/` is a single
+2. **📦 Portable by default.** The runtime in `bin/` is a single
    dependency-free Node.js script. A client can import the GitHub
    repository and start the MCP server with no `pnpm install` step.
-3. **Defensive and read-only.** Public-URL tools block SSRF targets
+3. **🛡️ Defensive and read-only.** Public-URL tools block SSRF targets
    (localhost, private ranges, metadata endpoints) at every redirect hop.
    Cloudflare, GitHub, WordPress, WooCommerce and Docker tools perform
    inspection only — never mutation.
 
 ---
 
-## Architecture
+## ✨ Features at a Glance
+
+| Domain | What you get |
+| --- | --- |
+| 🌐 **Web audit** | Performance, SEO, accessibility, security, stack detection, indexability, redirects, structured data |
+| 🔍 **SEO & LLM** | `llms.txt`, AI crawler directives, JSON-LD, canonical, hreflang, OG/Twitter, semantic metadata |
+| ♿ **Accessibility** | Static signals: `lang`, `alt`, labels, headings, landmarks, skip-links |
+| 🛡️ **Security** | CSP, HSTS, COOP/COEP/CORP, cookie attributes, clickjacking, referrer policy |
+| ☁️ **Cloudflare** | Zones, DNS, Workers, Pages, D1, R2, KV, Queues, Access — read-only |
+| 🐙 **GitHub** | Repos, branches, PRs, issues, releases, Actions, deployments |
+| 🛒 **WooCommerce** | System status, products, orders, gateways, shipping, webhooks |
+| 📝 **WordPress** | Plugins, themes, users, REST API discovery |
+| 🐳 **Docker** | Containers, images, networks, volumes, logs (bounded, secrets redacted) |
+| 🔒 **Hardening** | SSRF defense, 2.5 MiB body cap, timeouts, no shell-on-input, env-only credentials |
+
+---
+
+## 🏗️ Architecture
 
 ```
 Agent
@@ -49,18 +118,18 @@ Adapters / Providers
 HTTP / DNS / Cloudflare API / GitHub API / WP REST / WC REST / Docker CLI
 ```
 
-- **Skills** are knowledge and strategy. They tell the agent which tool to
+- **🧠 Skills** are knowledge and strategy. They tell the agent which tool to
   call, in which order, and how to interpret the result.
-- **MCP tools** are small, deterministic primitives. They never try to do
+- **🛠️ MCP tools** are small, deterministic primitives. They never try to do
   everything at once.
-- **The Core** is the analysis layer (TypeScript + cheerio for development,
+- **⚙️ The Core** is the analysis layer (TypeScript + cheerio for development,
   dependency-free JS for the portable runtime).
-- **Adapters** encapsulate external services. None of them accept
+- **🔌 Adapters** encapsulate external services. None of them accept
   credentials as tool arguments — they read the MCP runtime environment.
 
 ---
 
-## Repository layout
+## 📂 Repository Layout
 
 ```text
 .
@@ -92,14 +161,14 @@ HTTP / DNS / Cloudflare API / GitHub API / WP REST / WC REST / Docker CLI
 └── .github/workflows/ci.yml
 ```
 
-The portable MCP runtime in `bin/` is intentionally separated from the
-TypeScript packages: it is what an Agent Plugin client imports. The
-TypeScript packages remain the development surface (typed API, IDE
-tooling, dev-time MCP server, CLI).
+> 💡 The portable MCP runtime in `bin/` is intentionally separated from the
+> TypeScript packages: it is what an Agent Plugin client imports. The
+> TypeScript packages remain the development surface (typed API, IDE
+> tooling, dev-time MCP server, CLI).
 
 ---
 
-## Quick start
+## 🚀 Quick Start
 
 ### As an Agent Plugin
 
@@ -137,80 +206,98 @@ printf '%s\n' '{"jsonrpc":"2.0","id":1,"method":"tools/list"}' \
 
 ---
 
-## Tools (54)
+## 🛠️ Tools (54)
 
 | Tool | Category | Auth | Read-only | Description |
 | --- | --- | --- | --- | --- |
-| `site_audit` | web | – | yes | Broad baseline: performance, SEO, accessibility, security, stack |
-| `http_inspect` | web | – | yes | HTTP status, headers, content-type, encoding, cache-control, cookies |
-| `redirect_trace` | web | – | yes | Follow redirects hop-by-hop, detect loops and HTTP→HTTPS upgrades |
-| `page_compare` | web | – | yes | Side-by-side diff of two URLs |
-| `performance_audit` | web | – | yes | Performance-focused subset of `site_audit` |
-| `performance_assets` | web | – | yes | Same-origin scripts, stylesheets, images with size and cache headers |
-| `seo_audit` | web | – | yes | Title, description, canonical, headings, OG, Twitter, hreflang, structured data |
-| `seo_indexability` | web | – | yes | Indexability verdict combining HTTP status, robots, canonical and robots.txt |
-| `seo_links` | web | – | yes | Internal/external/nofollow classification, empty-text and generic anchors |
-| `seo_schema` | web | – | yes | Parse JSON-LD blocks, extract @type (including @graph), surface parse errors |
-| `seo_llm` | web | – | yes | llms.txt, AI crawler directives, structured data, semantic metadata |
-| `accessibility_audit` | web | – | yes | Static accessibility signals (lang, alt, labels, headings, landmarks, skip-link) |
-| `security_headers` | web | – | yes | CSP, HSTS, X-Content-Type-Options, Referrer-Policy, COOP/COEP/CORP, X-Frame-Options |
-| `security_cookies` | web | – | yes | Set-Cookie attribute analysis (Secure, HttpOnly, SameSite) |
-| `stack_detect` | web | – | yes | CDN, framework, CMS, analytics, server inference with evidence and confidence |
-| `robots_inspect` | web | – | yes | robots.txt parser (user-agents, disallow, allow, sitemaps) |
-| `sitemap_inspect` | web | – | yes | /sitemap.xml parser, urlset/index classification |
-| `cloudflare_account` | cloudflare | token | yes | Account metadata |
-| `cloudflare_zones` | cloudflare | token | yes | List zones visible to the token |
-| `cloudflare_zone` | cloudflare | token | yes | Single zone metadata |
-| `cloudflare_dns` | cloudflare | token | yes | DNS records for a zone (optionally filtered by type) |
-| `cloudflare_workers` | cloudflare | token + account | yes | Worker scripts in an account |
-| `cloudflare_pages` | cloudflare | token + account | yes | Cloudflare Pages projects |
-| `cloudflare_d1` | cloudflare | token + account | yes | D1 databases |
-| `cloudflare_r2` | cloudflare | token + account | yes | R2 buckets |
-| `cloudflare_kv` | cloudflare | token + account | yes | KV namespaces |
-| `cloudflare_queues` | cloudflare | token + account | yes | Queues |
-| `cloudflare_access` | cloudflare | token + account | yes | Access applications |
-| `github_repo` | github | optional token | yes | Repository metadata |
-| `github_branches` | github | optional token | yes | Branches and protection |
-| `github_pull_requests` | github | optional token | yes | PRs by state |
-| `github_issues` | github | optional token | yes | Issues (excluding PRs) |
-| `github_releases` | github | optional token | yes | Releases |
-| `github_actions` | github | optional token | yes | Workflow runs |
-| `github_workflow_runs` | github | optional token | yes | Runs for a specific workflow |
-| `github_deployments` | github | optional token | yes | Deployments |
-| `wordpress_rest_index` | wordpress | basic auth | yes | REST API namespaces and routes |
-| `wordpress_plugins` | wordpress | basic auth | yes | Installed plugins with status and version |
-| `wordpress_themes` | wordpress | basic auth | yes | Installed themes with status and version |
-| `wordpress_users` | wordpress | basic auth | yes | Users (treat as sensitive) |
-| `woocommerce_system_status` | woocommerce | wc keys | yes | System status (environment, theme, active plugins) |
-| `woocommerce_webhooks` | woocommerce | wc keys | yes | Webhook configuration |
-| `woocommerce_orders` | woocommerce | wc keys | yes | Recent orders summary |
-| `woocommerce_products` | woocommerce | wc keys | yes | Products summary |
-| `woocommerce_gateways` | woocommerce | wc keys | yes | Payment gateways |
-| `woocommerce_shipping` | woocommerce | wc keys | yes | Shipping zones and methods |
-| `docker_ps` | docker | local CLI | yes | Local containers |
-| `docker_inspect` | docker | local CLI | yes | Container inspect (secrets redacted) |
-| `docker_logs` | docker | local CLI | yes | Bounded tail of logs (max 500 lines) |
-| `docker_stats` | docker | local CLI | yes | One-shot CPU/memory/IO snapshot |
-| `docker_images` | docker | local CLI | yes | Local images |
-| `docker_networks` | docker | local CLI | yes | Local networks |
-| `docker_volumes` | docker | local CLI | yes | Local volumes |
-| `docker_compose_status` | docker | local CLI | yes | `docker compose ps` for the current project |
+| `site_audit` | web | – | ✅ | Broad baseline: performance, SEO, accessibility, security, stack |
+| `http_inspect` | web | – | ✅ | HTTP status, headers, content-type, encoding, cache-control, cookies |
+| `redirect_trace` | web | – | ✅ | Follow redirects hop-by-hop, detect loops and HTTP→HTTPS upgrades |
+| `page_compare` | web | – | ✅ | Side-by-side diff of two URLs |
+| `performance_audit` | web | – | ✅ | Performance-focused subset of `site_audit` |
+| `performance_assets` | web | – | ✅ | Same-origin scripts, stylesheets, images with size and cache headers |
+| `seo_audit` | web | – | ✅ | Title, description, canonical, headings, OG, Twitter, hreflang, structured data |
+| `seo_indexability` | web | – | ✅ | Indexability verdict combining HTTP status, robots, canonical and robots.txt |
+| `seo_links` | web | – | ✅ | Internal/external/nofollow classification, empty-text and generic anchors |
+| `seo_schema` | web | – | ✅ | Parse JSON-LD blocks, extract @type (including @graph), surface parse errors |
+| `seo_llm` | web | – | ✅ | llms.txt, AI crawler directives, structured data, semantic metadata |
+| `accessibility_audit` | web | – | ✅ | Static accessibility signals (lang, alt, labels, headings, landmarks, skip-link) |
+| `security_headers` | web | – | ✅ | CSP, HSTS, X-Content-Type-Options, Referrer-Policy, COOP/COEP/CORP, X-Frame-Options |
+| `security_cookies` | web | – | ✅ | Set-Cookie attribute analysis (Secure, HttpOnly, SameSite) |
+| `stack_detect` | web | – | ✅ | CDN, framework, CMS, analytics, server inference with evidence and confidence |
+| `robots_inspect` | web | – | ✅ | robots.txt parser (user-agents, disallow, allow, sitemaps) |
+| `sitemap_inspect` | web | – | ✅ | /sitemap.xml parser, urlset/index classification |
+| `cloudflare_account` | cloudflare | token | ✅ | Account metadata |
+| `cloudflare_zones` | cloudflare | token | ✅ | List zones visible to the token |
+| `cloudflare_zone` | cloudflare | token | ✅ | Single zone metadata |
+| `cloudflare_dns` | cloudflare | token | ✅ | DNS records for a zone (optionally filtered by type) |
+| `cloudflare_workers` | cloudflare | token + account | ✅ | Worker scripts in an account |
+| `cloudflare_pages` | cloudflare | token + account | ✅ | Cloudflare Pages projects |
+| `cloudflare_d1` | cloudflare | token + account | ✅ | D1 databases |
+| `cloudflare_r2` | cloudflare | token + account | ✅ | R2 buckets |
+| `cloudflare_kv` | cloudflare | token + account | ✅ | KV namespaces |
+| `cloudflare_queues` | cloudflare | token + account | ✅ | Queues |
+| `cloudflare_access` | cloudflare | token + account | ✅ | Access applications |
+| `github_repo` | github | optional token | ✅ | Repository metadata |
+| `github_branches` | github | optional token | ✅ | Branches and protection |
+| `github_pull_requests` | github | optional token | ✅ | PRs by state |
+| `github_issues` | github | optional token | ✅ | Issues (excluding PRs) |
+| `github_releases` | github | optional token | ✅ | Releases |
+| `github_actions` | github | optional token | ✅ | Workflow runs |
+| `github_workflow_runs` | github | optional token | ✅ | Runs for a specific workflow |
+| `github_deployments` | github | optional token | ✅ | Deployments |
+| `wordpress_rest_index` | wordpress | basic auth | ✅ | REST API namespaces and routes |
+| `wordpress_plugins` | wordpress | basic auth | ✅ | Installed plugins with status and version |
+| `wordpress_themes` | wordpress | basic auth | ✅ | Installed themes with status and version |
+| `wordpress_users` | wordpress | basic auth | ✅ | Users (treat as sensitive) |
+| `woocommerce_system_status` | woocommerce | wc keys | ✅ | System status (environment, theme, active plugins) |
+| `woocommerce_webhooks` | woocommerce | wc keys | ✅ | Webhook configuration |
+| `woocommerce_orders` | woocommerce | wc keys | ✅ | Recent orders summary |
+| `woocommerce_products` | woocommerce | wc keys | ✅ | Products summary |
+| `woocommerce_gateways` | woocommerce | wc keys | ✅ | Payment gateways |
+| `woocommerce_shipping` | woocommerce | wc keys | ✅ | Shipping zones and methods |
+| `docker_ps` | docker | local CLI | ✅ | Local containers |
+| `docker_inspect` | docker | local CLI | ✅ | Container inspect (secrets redacted) |
+| `docker_logs` | docker | local CLI | ✅ | Bounded tail of logs (max 500 lines) |
+| `docker_stats` | docker | local CLI | ✅ | One-shot CPU/memory/IO snapshot |
+| `docker_images` | docker | local CLI | ✅ | Local images |
+| `docker_networks` | docker | local CLI | ✅ | Local networks |
+| `docker_volumes` | docker | local CLI | ✅ | Local volumes |
+| `docker_compose_status` | docker | local CLI | ✅ | `docker compose ps` for the current project |
 
-Every tool advertises the standard MCP `annotations`:
-
-- `readOnlyHint: true` (the toolkit is read-only by design).
-- `destructiveHint: false`.
-- `idempotentHint: true`.
-- `openWorldHint`: `true` for network tools, `false` for local Docker tools.
-
-Future write tools (Cloudflare DNS, GitHub issue creation, WordPress
-maintenance, deployment actions) will be introduced under their own
-namespace with `destructiveHint: true`, allowlists and confirmation
-flows. They are not part of the default toolkit.
+> **MCP annotations** Every tool advertises:
+>
+> - `readOnlyHint: true` (the toolkit is read-only by design)
+> - `destructiveHint: false`
+> - `idempotentHint: true`
+> - `openWorldHint`: `true` for network tools, `false` for local Docker tools
+>
+> Future write tools (Cloudflare DNS, GitHub issue creation, WordPress
+> maintenance, deployment actions) will be introduced under their own
+> namespace with `destructiveHint: true`, allowlists and confirmation
+> flows. They are not part of the default toolkit.
 
 ---
 
-## Environment variables
+## 🧠 Skills (6)
+
+The toolkit ships six skills. Each skill is a markdown file that
+describes **when** to use which tool, in **what order**, and how to
+interpret the result. Skills do not duplicate implementation; they
+describe strategy.
+
+| Skill | Purpose |
+| --- | --- |
+| 🕸️ **`web-audit`** | Broad website audit. Start with `site_audit`, narrow with `performance_audit`, `seo_audit`, `accessibility_audit`, `security_headers`, then `stack_detect`, then root-cause tools. |
+| ☁️ **`platform-ops`** | Cloudflare, GitHub and Docker inspection. All read-only. Use the smallest tool that answers the question. |
+| 🛒 **`wordpress-commerce`** | WordPress and WooCommerce via REST. Uses environment credentials, never tool arguments. |
+| 🔎 **`seo-llm`** | Technical SEO + LLM discoverability. Treats `llms.txt` as an emerging convention, not a standard. |
+| ⚡ **`performance-optimization`** | TTFB, HTML weight, render-blocking, images, caching, resource hints. |
+| 🛡️ **`security-review`** | Defensive security review. Browser-facing headers, cookies, integration configuration. |
+
+---
+
+## 🔐 Environment Variables
 
 | Variable | Used by | Notes |
 | --- | --- | --- |
@@ -224,12 +311,12 @@ flows. They are not part of the default toolkit.
 | `WOOCOMMERCE_KEY` | WooCommerce tools | Consumer key (preferably read-only). |
 | `WOOCOMMERCE_SECRET` | WooCommerce tools | Consumer secret. |
 
-Credentials are **never** accepted as MCP tool arguments. They belong in
-the MCP runtime environment.
+> ⚠️ Credentials are **never** accepted as MCP tool arguments. They belong in
+> the MCP runtime environment.
 
 ---
 
-## Result envelope
+## 📦 Result Envelope
 
 Every tool returns the same shape so that agents can combine findings
 across tools predictably.
@@ -278,40 +365,19 @@ across tools predictably.
 
 ### Severity scale
 
-- `info` — observation, no action required.
-- `low` — nice-to-fix.
-- `medium` — should-fix.
-- `high` — must-fix.
-- `critical` — actively breaks or compromises the page.
+| Severity | Meaning |
+| --- | --- |
+| `info` | Observation, no action required. |
+| `low` | Nice-to-fix. |
+| `medium` | Should-fix. |
+| `high` | Must-fix. |
+| `critical` | Actively breaks or compromises the page. |
 
 ---
 
-## Skills
+## 💡 Examples
 
-The toolkit ships six skills. Each skill is a markdown file that
-describes **when** to use which tool, in **what order**, and how to
-interpret the result. Skills do not duplicate implementation; they
-describe strategy.
-
-- **`web-audit`** — broad website audit. Start with `site_audit`,
-  narrow with `performance_audit`, `seo_audit`, `accessibility_audit`,
-  `security_headers`, then `stack_detect`, then root-cause tools.
-- **`platform-ops`** — Cloudflare, GitHub and Docker inspection.
-  All read-only. Use the smallest tool that answers the question.
-- **`wordpress-commerce`** — WordPress and WooCommerce via REST.
-  Uses environment credentials, never tool arguments.
-- **`seo-llm`** — technical SEO + LLM discoverability. Treats
-  `llms.txt` as an emerging convention, not a standard.
-- **`performance-optimization`** — TTFB, HTML weight, render-blocking,
-  images, caching, resource hints.
-- **`security-review`** — defensive security review. Browser-facing
-  headers, cookies, integration configuration.
-
----
-
-## Examples
-
-### "Audit example.com completely"
+### 🔍 "Audit example.com completely"
 
 ```text
 1. site_audit          https://example.com
@@ -324,21 +390,21 @@ describe strategy.
 8. prioritise by severity and user impact
 ```
 
-### "Is Google able to index this page?"
+### 🕷️ "Is Google able to index this page?"
 
 ```text
 seo_indexability https://example.com
   → finalUrl, status, robots meta, X-Robots-Tag, canonical, robots.txt
 ```
 
-### "What is the server stack?"
+### 🧱 "What is the server stack?"
 
 ```text
 stack_detect https://example.com
   → CDN, framework, CMS, analytics, server
 ```
 
-### "Are my Cloudflare zones reachable?"
+### ☁️ "Are my Cloudflare zones reachable?"
 
 ```text
 cloudflare_account
@@ -347,7 +413,7 @@ cloudflare_zone example.com
 cloudflare_dns example.com
 ```
 
-### "Compare staging and production"
+### 🆚 "Compare staging and production"
 
 ```text
 page_compare
@@ -357,11 +423,11 @@ page_compare
 
 ---
 
-## Security model
+## 🔒 Security Model
 
 The portable plugin is **read-only** by design.
 
-- **SSRF defense.** Public-URL fetchers refuse `localhost`, the
+- **🚫 SSRF defense.** Public-URL fetchers refuse `localhost`, the
   `*.local` and `*.localhost` zones, the IPv4 ranges
   `0.0.0.0/8`, `10.0.0.0/8`, `127.0.0.0/8`, `169.254.0.0/16` (including
   `169.254.169.254` for cloud metadata), `172.16.0.0/12`,
@@ -372,39 +438,39 @@ The portable plugin is **read-only** by design.
   `fe80::/10`, `ff00::/8`, `2001:db8::/32`, IPv4-mapped and 6to4
   addresses that resolve to a private IPv4 octet. Every redirect hop is
   re-validated against the same policy.
-- **Hard size cap.** Any fetched body is rejected above 2.5 MiB.
-- **Bounded concurrency and timeouts.** Every HTTP request has a
+- **📏 Hard size cap.** Any fetched body is rejected above 2.5 MiB.
+- **⏱️ Bounded concurrency and timeouts.** Every HTTP request has a
   per-request timeout (default 15 s) and the redirect loop is bounded.
-- **Credentials.** Integrations read credentials from the MCP runtime
+- **🔑 Credentials.** Integrations read credentials from the MCP runtime
   environment. Tool arguments never carry secrets.
-- **No shell on user input.** Docker handlers use `execFile` with
+- **🚷 No shell on user input.** Docker handlers use `execFile` with
   argument allowlists (container names match `^[A-Za-z0-9_.-]+$`).
   There is intentionally no `execute_command` tool.
 
-When a test-only loopback opt-in is required, the runtime honours the
-`JEDAVID_TEST_ALLOW_LOOPBACK=1` env var. In normal operation this env
-var is unset and loopback targets are still blocked.
+> 🧪 When a test-only loopback opt-in is required, the runtime honours the
+> `JEDAVID_TEST_ALLOW_LOOPBACK=1` env var. In normal operation this env
+> var is unset and loopback targets are still blocked.
 
 ---
 
-## MCP compatibility
+## 🔌 MCP Compatibility
 
-- Modern: `server/discover` advertises support for protocol
+- **Modern:** `server/discover` advertises support for protocol
   `2026-07-28`, `2025-11-25` and `2025-06-18`.
-- Legacy: `initialize` negotiates the highest mutually supported
+- **Legacy:** `initialize` negotiates the highest mutually supported
   protocol among `2025-11-25`, `2025-06-18`, `2025-03-26`,
   `2024-11-05`.
-- Stdio: newline-delimited JSON-RPC.
-- Tools: `tools/list` advertises 54 tools with full schemas and
+- **Transport:** stdio, newline-delimited JSON-RPC.
+- **Tools:** `tools/list` advertises 54 tools with full schemas and
   annotations. `tools/call` wraps the handler result in a
   `content` + `structuredContent` envelope per the MCP spec.
-- Errors: tools return a JSON-RPC `error` with code `-32601` for
+- **Errors:** tools return a JSON-RPC `error` with code `-32601` for
   unknown methods and a `tools/call` `isError: true` content array
   for handler failures, including the SSRF rejection message.
 
 ---
 
-## Development
+## 🛠️ Development
 
 ```bash
 corepack enable
@@ -428,31 +494,72 @@ split into:
 - `tests/integration.test.mjs` — end-to-end runs of the portable
   runtime against a local HTTP fixture server.
 
-The integration test sets `JEDAVID_TEST_ALLOW_LOOPBACK=1` so the
-runtime can hit `127.0.0.1`. The dedicated SSRF tests in
-`tests/mcp.test.mjs` explicitly disable that opt-in and verify that
-localhost and private IPs are still blocked.
+> 🧪 The integration test sets `JEDAVID_TEST_ALLOW_LOOPBACK=1` so the
+> runtime can hit `127.0.0.1`. The dedicated SSRF tests in
+> `tests/mcp.test.mjs` explicitly disable that opt-in and verify that
+> localhost and private IPs are still blocked.
 
 ---
 
-## CI
+## 🤖 CI
 
 GitHub Actions runs on every push and pull request:
 
-1. Manifest validation (`plugin.json`, `mcp.json`, `package.json`,
+1. **Manifest validation** (`plugin.json`, `mcp.json`, `package.json`,
    `tsconfig.base.json`, `pnpm-workspace.yaml`).
-2. Portable MCP smoke test (`tools/list`, `server/discover`,
+2. **Portable MCP smoke test** (`tools/list`, `server/discover`,
    unknown-tool rejection, missing-method rejection).
-3. `pnpm install` and `pnpm build` so the Core dist exists.
-4. `pnpm typecheck`.
-5. `pnpm test` (79 tests).
-6. Skill sanity (every `SKILL.md` declares `name:` and
+3. **`pnpm install`** and **`pnpm build`** so the Core dist exists.
+4. **`pnpm typecheck`**.
+5. **`pnpm test`** (79 tests).
+6. **Skill sanity** (every `SKILL.md` declares `name:` and
    `description:`).
 
-CI does not require any secrets.
+> ✅ CI does not require any secrets.
 
 ---
 
-## License
+## 🤝 Contributing
 
-MIT
+Contributions are welcome! Here's how to get started:
+
+1. 🍴 **Fork** the repository.
+2. 🌿 Create a **feature branch**: `git checkout -b feature/amazing-tool`
+3. 🧪 Add or update **tests** for your change.
+4. ✅ Ensure `pnpm typecheck` and `pnpm test` pass locally.
+5. 📝 Update the relevant `SKILL.md` or README section.
+6. 🚀 Open a **Pull Request** with a clear description and motivation.
+
+Please open an issue first for larger changes so we can align on the
+approach before you invest the time.
+
+---
+
+## 📄 License
+
+This project is licensed under the **MIT License** — see the
+[LICENSE](LICENSE) file for details.
+
+<div align="center">
+
+```
+MIT License — Copyright (c) 2026 Jesus David
+```
+
+</div>
+
+---
+
+## 🔗 Links & Resources
+
+- 📦 **Repository:** [github.com/jesusdavidweb/jedavid-web-tools](https://github.com/jesusdavidweb/jedavid-web-tools)
+- 🧩 **Agent Plugins 1.0 spec:** [agent-plugins.org](https://agent-plugins.org)
+- 🔌 **Model Context Protocol:** [modelcontextprotocol.io](https://modelcontextprotocol.io)
+- 🐛 **Issues:** [github.com/jesusdavidweb/jedavid-web-tools/issues](https://github.com/jesusdavidweb/jedavid-web-tools/issues)
+- ⭐ **Star the repo** if this toolkit helped you.
+
+<div align="center">
+
+Made with ❤️ by [Jesus David](https://github.com/jesusdavidweb)
+
+</div>
