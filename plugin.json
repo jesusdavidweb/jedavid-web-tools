@@ -1,0 +1,20 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "jedavid-web-tools",
+  "version": "0.1.0",
+  "description": "Portable web engineering tools for AI agents: performance, SEO, security, and reusable audit workflows.",
+  "author": {
+    "name": "Jesus David",
+    "url": "https://jesusdavid.net"
+  },
+  "homepage": "https://github.com/jesusdavidweb/jedavid-web-tools",
+  "repository": "https://github.com/jesusdavidweb/jedavid-web-tools.git",
+  "license": "MIT",
+  "keywords": [
+    "web-performance",
+    "seo",
+    "security",
+    "mcp",
+    "agent-tools"
+  ]
+}
