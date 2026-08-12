@@ -14,13 +14,26 @@ jobs:
           node-version: 22
       - name: Enable Corepack
         run: corepack enable
-      - name: Validate portable plugin files
+
+      # 1. Manifest validation. The plugin and MCP manifests must parse as JSON
+      #    and reference files that actually exist in the repo.
+      - name: Validate manifests
         run: |
-          node -e "JSON.parse(require('fs').readFileSync('plugin.json','utf8')); JSON.parse(require('fs').readFileSync('mcp.json','utf8'))"
+          node -e "const fs=require('fs'); ['plugin.json','mcp.json','package.json','tsconfig.base.json','pnpm-workspace.yaml'].forEach(f => JSON.parse(fs.readFileSync(f, 'utf8')))"
+          node -e "const p=require('./plugin.json'); const m=require('./mcp.json'); if(!p.name||!p.version) throw new Error('plugin.json missing name/version'); for(const [name,cfg] of Object.entries(m.mcpServers||{})){ if(!cfg.command||!cfg.args) throw new Error('mcp server '+name+' missing command/args'); }"
           test -x bin/jedavid-web-tools-mcp.mjs
-          printf '%s\n' '{"jsonrpc":"2.0","id":1,"method":"tools/list","params":{}}' | node bin/jedavid-web-tools-mcp.mjs | grep 'site_audit'
-          printf '%s\n' '{"jsonrpc":"2.0","id":2,"method":"server/discover","params":{"_meta":{"io.modelcontextprotocol/protocolVersion":"2026-07-28","io.modelcontextprotocol/clientInfo":{"name":"ci","version":"1"},"io.modelcontextprotocol/clientCapabilities":{}}}}' | node bin/jedavid-web-tools-mcp.mjs | grep '2026-07-28'
-      - name: Install development dependencies
+
+      # 2. Portable MCP smoke test. The runtime must start without pnpm install
+      #    and answer tools/list, server/discover and unknown-tool correctly.
+      - name: Portable MCP smoke test
+        run: |
+          printf '%s\n' '{"jsonrpc":"2.0","id":1,"method":"tools/list","params":{}}' | node bin/jedavid-web-tools-mcp.mjs | grep -q 'site_audit'
+          printf '%s\n' '{"jsonrpc":"2.0","id":2,"method":"server/discover","params":{}}' | node bin/jedavid-web-tools-mcp.mjs | grep -q '2026-07-28'
+          printf '%s\n' '{"jsonrpc":"2.0","id":3,"method":"tools/call","params":{"name":"unknown","arguments":{}}}' | node bin/jedavid-web-tools-mcp.mjs | grep -q 'Unknown tool'
+          printf '%s\n' '{"jsonrpc":"2.0","id":4,"method":"http_inspect","params":{}}' | node bin/jedavid-web-tools-mcp.mjs | grep -q 'Method not found'
+
+      # 3. Install dev dependencies and build everything.
+      - name: Install
         run: pnpm install --no-frozen-lockfile --ignore-scripts
       - name: Build core types
         run: pnpm --filter @jedavid/web-tools-core build
@@ -28,3 +41,16 @@ jobs:
         run: pnpm typecheck
       - name: Build
         run: pnpm build
+
+      # 4. Test suite. The full unit + integration test suite must pass.
+      - name: Run tests
+        run: pnpm test
+
+      # 5. Skills sanity. Every Skill must declare name and description.
+      - name: Validate skills
+        run: |
+          for f in skills/*/SKILL.md; do
+            test -f "$f" || (echo "missing skill: $f" && exit 1)
+            grep -q '^name:' "$f" || (echo "$f missing name:" && exit 1)
+            grep -q '^description:' "$f" || (echo "$f missing description:" && exit 1)
+          done

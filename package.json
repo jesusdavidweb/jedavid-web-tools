@@ -1,6 +1,6 @@
 {
   "name": "jedavid-web-tools",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "private": true,
   "type": "module",
   "packageManager": "pnpm@11.17.0",
@@ -9,7 +9,9 @@
     "typecheck": "pnpm -r typecheck",
     "audit": "pnpm --filter @jedavid/web-tools-cli dev --",
     "mcp": "pnpm --filter @jedavid/web-tools-mcp dev",
-    "mcp:portable": "node bin/jedavid-web-tools-mcp.mjs"
+    "mcp:portable": "node bin/jedavid-web-tools-mcp.mjs",
+    "test": "node --test --test-reporter=spec 'tests/**/*.test.mjs'",
+    "test:single": "node --test --test-reporter=spec"
   },
   "engines": {
     "node": ">=22"

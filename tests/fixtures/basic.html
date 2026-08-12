@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Test Page — jedavid-web-tools fixtures</title>
+    <meta name="description" content="A simple fixture page used by the test suite to verify HTML parsing and findings generators." />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://example.com/" />
+    <link rel="alternate" hreflang="en" href="https://example.com/en/" />
+    <link rel="alternate" hreflang="es" href="https://example.com/es/" />
+    <link rel="alternate" hreflang="x-default" href="https://example.com/" />
+    <link rel="stylesheet" href="/assets/main.css" />
+    <link rel="preload" as="font" type="font/woff2" href="/assets/inter.woff2" crossorigin />
+    <link rel="preconnect" href="https://cdn.example.com" />
+    <link rel="icon" href="/favicon.ico" />
+    <meta property="og:title" content="Test Page" />
+    <meta property="og:description" content="OpenGraph description for tests." />
+    <meta property="og:image" content="https://example.com/og.png" />
+    <meta property="og:url" content="https://example.com/" />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Test Page" />
+    <meta name="twitter:description" content="Twitter card description." />
+    <script type="application/ld+json">
+      { "@context": "https://schema.org", "@type": "WebSite", "name": "Example", "url": "https://example.com/" }
+    </script>
+    <script type="application/ld+json">
+      { "@context": "https://schema.org", "@graph": [
+        { "@type": "Organization", "name": "Example Org", "url": "https://example.com" },
+        { "@type": "WebSite", "name": "Example", "url": "https://example.com/" }
+      ] }
+    </script>
+    <script src="/assets/main.js" defer></script>
+    <script>window.__inline = 1;</script>
+  </head>
+  <body>
+    <header>
+      <a class="skip" href="#main">Skip to content</a>
+      <nav><a href="/">Home</a> <a href="/about">About</a> <a href="https://other.example.com">External</a></nav>
+    </header>
+    <main id="main">
+      <h1>Test Page</h1>
+      <h2>Section 1</h2>
+      <p>Some text with a <a href="/internal">descriptive link</a> and an <a href="/more">empty text</a> link.</p>
+      <p><a href="https://google.com" rel="nofollow">External nofollow</a></p>
+      <img src="/cat.jpg" alt="A cat" width="600" height="400" />
+      <img src="/logo.svg" width="32" height="32" />
+      <img src="/no-alt.jpg" loading="lazy" />
+      <img src="/banner.jpg" loading="lazy" />
+      <form>
+        <label for="email">Email</label>
+        <input id="email" type="email" />
+        <input type="submit" value="Go" />
+      </form>
+      <iframe src="https://www.youtube.com/embed/abc" title="Promo video"></iframe>
+      <iframe src="https://example.com/embed"></iframe>
+    </main>
+    <footer><p>Footer</p></footer>
+  </body>
+</html>
